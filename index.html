@@ -5,29 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./app.js" defer></script>
+    <link rel="stylesheet" href="./style.css">
     <title>nook</title>
 </head>
 <body>
     <header>nook</header>
+    <div id="nook">
+        
+    </div>
     <dialog id="newBookModal">
-        <form action="dialog">
+        <form method="dialog" id="addBookForm">
+            <button id="closeDialog" type="button">x</button>
             <div>
                 <label for="bookTitle">title:</label>
-                <input id="bookTitle" type="text">
+                <input id="bookTitle" type="text" name="bookTitle" required>
             </div>
             <div>
                 <label for="bookAuthor">author:</label>
-                <input id="bookAuthor" type="text">
+                <input id="bookAuthor" type="text" name="bookAuthor" required>
             </div>
             <div>
                 <label for="bookPages">pages:</label>
-                <input id="bookPages" type="number">
+                <input id="bookPages" type="number" name="bookPages">
             </div>
-            <div>
-                <label for="bookRead">
-                <input id="bookRead" type="text"></label>
-            </div>
-            <button type="submit">shelve</button>
+            <fieldset>
+                <legend>book status:</legend>
+                <div>
+                    <label for="bookRead">want to read</label>
+                    <input id="wantToRead" type="radio" name="bookRead" value="want to read" required>
+                </div>
+
+                <div>
+                    <label for="bookRead">in progress</label>
+                    <input id="inProgress" type="radio" name="bookRead" value="in progress" required>
+                </div>
+
+                <div>
+                    <label for="bookRead">read</label>
+                    <input id="bookRead" type="radio" name="bookRead" value="read" required>
+                </div>
+            </fieldset>
+            <button id="shelveBook" type="submit">shelve</button>
         </form>
     </dialog>
     
