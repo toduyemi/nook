@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./app.js" defer></script>
+    <title>nook</title>
+</head>
+<body>
+    <header>nook</header>
+    <dialog id="newBookModal">
+        <form action="dialog">
+            <div>
+                <label for="bookTitle">title:</label>
+                <input id="bookTitle" type="text">
+            </div>
+            <div>
+                <label for="bookAuthor">author:</label>
+                <input id="bookAuthor" type="text">
+            </div>
+            <div>
+                <label for="bookPages">pages:</label>
+                <input id="bookPages" type="number">
+            </div>
+            <div>
+                <label for="bookRead">
+                <input id="bookRead" type="text"></label>
+            </div>
+            <button type="submit">shelve</button>
+        </form>
+    </dialog>
+    
+    <button id="newBookButton">+</button>
+
+
+    
+</body>
+</html>
