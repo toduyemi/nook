@@ -16,31 +16,36 @@ function Book(title, author, pages, status) {
     this.author = author;
     this.pages = pages;
     this.status = status;
+    this.printed = false;
 }
 
 const displayNook = () => {
     console.log(myNook);
     myNook.forEach((book) => {
-        const bookCard = document.createElement('div');
+        if (!book.printed) {
+            const bookCard = document.createElement('div');
 
 
-        const bookTitle = document.createElement('div');
-        const bookAuthor = document.createElement('div');
-        const bookPages = document.createElement('div');
-        const bookRead = document.createElement('div');
+            const bookTitle = document.createElement('div');
+            const bookAuthor = document.createElement('div');
+            const bookPages = document.createElement('div');
+            const bookRead = document.createElement('div');
 
-        bookTitle.textContent = `Title: ${book.title}`;
-        bookAuthor.textContent = `Author: ${book.author}`;
-        bookPages.textContent = `Pages: ${book.pages}`;
-        bookRead.textContent = `Status: ${book.status}`;
+            bookTitle.textContent = `Title: ${book.title}`;
+            bookAuthor.textContent = `Author: ${book.author}`;
+            bookPages.textContent = `Pages: ${book.pages}`;
+            bookRead.textContent = `Status: ${book.status}`;
+
+
+            bookCard.appendChild(bookTitle);
+            bookCard.appendChild(bookAuthor);
+            bookCard.appendChild(bookPages);
+            bookCard.appendChild(bookRead);
+
+            nook.appendChild(bookCard);
+            book.printed = true;
+        }
         
-
-        bookCard.appendChild(bookTitle);
-        bookCard.appendChild(bookAuthor);
-        bookCard.appendChild(bookPages);
-        bookCard.appendChild(bookRead);
-
-        nook.appendChild(bookCard);
     });
 
 }
