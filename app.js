@@ -5,7 +5,6 @@ const newBookModal = document.querySelector('#newBookModal');
 const addBookForm = document.querySelector('#addBookForm')
 const shelveButton = document.querySelector('#shelveBook');
 const closeDialogButton = document.querySelector('#closeDialog');
-let removeBookButtons;
 let NewBook;
 
 function addBookToNook(book) {
@@ -23,17 +22,15 @@ function Book(title, author, pages, status) {
 }
 
 Book.prototype.getDataIndex = function() {
-    let index = myNook.findIndex(book => {
-        console.log(book.title);
-        console.log(this.title);
-        return book.title === this.title;
-    });
-    console.log(index);
+    let index = myNook.findIndex(book => book.title === this.title);
     return index;
 }
 
-function addDeleteButtonToArray() {
-    removeBookButtons = document.querySelectorAll('.removeBook');
+
+function deleteBookCard(index) {
+    let currentBookCard = document.querySelector(`[data-index="${index}"`);
+    
+    currentBookCard.remove();
 }
 
 function displayNook() {
@@ -49,7 +46,12 @@ function displayNook() {
             const bookRead = document.createElement('div');
             const deleteButton = document.createElement('button');
             deleteButton.classList.add('removeBook');
-            addDeleteButtonToArray();
+            deleteButton.setAttribute('data-index', book.getDataIndex());
+            deleteButton.addEventListener('click', function () {
+                let bookIndex = this.getAttribute('data-index');
+                console.log(bookIndex);
+                deleteBookCard(bookIndex);
+            });
 
             bookTitle.textContent = `Title: ${book.title}`;
             bookAuthor.textContent = `Author: ${book.author}`;
@@ -65,11 +67,10 @@ function displayNook() {
             bookCard.appendChild(deleteButton);
 
             nook.appendChild(bookCard);
+
             book.printed = true;
         }
-        
     });
-
 }
 
 
@@ -93,5 +94,3 @@ addBookForm.addEventListener('submit', (e) => {
     
     displayNook();
 });
-
-removeBookButtons.forEach
