@@ -5,7 +5,7 @@ const newBookModal = document.querySelector('#newBookModal');
 const addBookForm = document.querySelector('#addBookForm')
 const shelveButton = document.querySelector('#shelveBook');
 const closeDialogButton = document.querySelector('#closeDialog');
-const closeEditDialogButton = document.querySelector('#editBookForm #closeDialog');
+// const closeEditDialogButton = document.querySelector('#editBookForm #closeDialog');
 let NewBook;
 
 
@@ -21,8 +21,8 @@ function Book(title, author, pages, progress) {
 
     //made editBookModal element a property of card so it would have access to element properties
     //does this really need to be a property of constructor?
-    this.editBookModal = document.querySelector('#editBookModal');
-    this.editBookForm = document.querySelector('#editBookForm');
+    this.editBookModal = document.querySelector('#newBookModal');
+    this.editBookForm = document.querySelector('#addBookForm');
 
 
     // this.editBookForm.prototype.prefillEditBookForm = function () {
@@ -55,9 +55,6 @@ Book.prototype.createBookCard = function () {
     this.editButton.classList.add('bookCardButton');
     this.editButton.addEventListener('click', () => {
         this.editBookModal.showModal();
-        closeEditDialogButton.addEventListener('click', () => {
-            this.editBookModal.close();
-        });
         this.prefillEditBookForm();
 
     });
@@ -103,7 +100,7 @@ Book.prototype.prefillEditBookForm = function () {
     this.editBookForm.bookTitle.value = this.title;
     this.editBookForm.bookAuthor.value = this.author;
     this.editBookForm.bookPages.value = this.pages;
-    document.querySelector(`#editBookForm [value="${this.progress}"]`).checked = true;
+    document.querySelector(`[value="${this.progress}"]`).checked = true;
 
 
 }
@@ -111,6 +108,7 @@ Book.prototype.prefillEditBookForm = function () {
 
 function resetAllIds() {
     myNook.forEach(book => book.setDataIndex());
+    this;
 }
 
 function addBookToNook(book) {
@@ -151,12 +149,17 @@ closeDialogButton.addEventListener('click', () => {
 })
 
 addBookForm.addEventListener('submit', function (e) {
-    console.log(this)
-    NewBook = new Book(this.bookTitle.value, this.bookAuthor.value, this.bookPages.value, this.bookRead.value);
-    console.log(NewBook);
-    addBookToNook(NewBook);
-    displayNook();
-    NewBook.setDataIndex();
+    if (this === addBookForm) {
+        console.log(this)
+        NewBook = new Book(this.bookTitle.value, this.bookAuthor.value, this.bookPages.value, this.bookRead.value);
+        console.log(NewBook);
+        addBookToNook(NewBook);
+        displayNook();
+        NewBook.setDataIndex();
+    }
+
+    // else if (this === Book.prototype)
+
 });
 
 
