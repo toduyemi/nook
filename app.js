@@ -5,12 +5,16 @@ const newBookModal = document.querySelector('#newBookModal');
 const editBookModal = document.querySelector('#editBookModal');
 const addBookForm = document.querySelector('#addBookForm')
 const shelveButton = document.querySelector('#shelveBook');
+const reviewButton = document.querySelector('#editBookModal #reviewButton');
+const bookReviewModal = document.querySelector('#bookReviewModal');
+const closeReviewDialogButton = document.querySelector('#bookReviewModal #closeDialog')
 const closeDialogButton = document.querySelector('#closeDialog');
 const closeEditDialogButton = document.querySelector('#editBookForm #closeDialog');
 let NewBook;
 
 
 function Book(title, author, pages, progress) {
+    "use strict";
 
     this.title = title;
     this.author = author;
@@ -21,6 +25,7 @@ function Book(title, author, pages, progress) {
     this.printed = false;
 
     this.editBookForm = document.querySelector('#editBookForm');
+    this.bookReadRadios = document.querySelectorAll('#editBookForm [name="bookRead"]');
     this.deleteButton = document.createElement('button');
     this.editButton = document.createElement('button');
     this.deleteButton.textContent = 'remove';
@@ -37,17 +42,31 @@ function Book(title, author, pages, progress) {
 
     this.editButton.classList.add('bookCardButton');
     this.editButton.addEventListener('click', () => {
-
+        console.log(this);
         // event Handler tracker prevents an eventhandler 
         // from being added to form every time the edit button is clicked
-        this.eventHandlerTracker;
         editBookModal.showModal();
         this.prefillEditBookForm();
 
+        // submit edit
         this.updateEditBook = this.updateEditBook.bind(this);
         this.editBookForm.addEventListener('submit', this.updateEditBook);
 
+        // for default radio button behaviour
+
+        this.bookReadRadios.forEach(function (radio) {
+            radio.addEventListener('change', disableReview);
+        });
+
+        reviewButton.addEventListener('click', () => {
+            console.log(this);
+            bookReviewModal.showModal();
+        });
+
+
     });
+
+
 
 
 }
@@ -133,6 +152,19 @@ function deleteBookCard(index) {
     resetAllIds();
 }
 
+function disableReview() {
+    // check to see if book has been read
+    if (document.querySelector('#editBookForm #bookRead').checked) {
+        //show review button
+        reviewButton.disabled = false;
+    }
+
+    else {
+        //hide review button
+        reviewButton.disabled = true;
+    }
+}
+
 function displayNook() {
     console.log(myNook);
     myNook.forEach((book) => {
@@ -148,11 +180,13 @@ function displayNook() {
 }
 
 //prefill 
-RedRising = new Book('Red Rising', 'Pierce Brown', 600, 'read');
+RedRising = new Book('Red Rising', 'Pierce Brown', 600, 'in progress');
 addBookToNook(RedRising);
-BewareofChicken = new Book('Beware of Chicken Vol 1', 'Casualfarmer', 500, 'read');
-addBookToNook(BewareofChicken);
+BewareOfChicken = new Book('Beware of Chicken Vol 1', 'Casualfarmer', 500, 'read');
+addBookToNook(BewareOfChicken);
 displayNook();
+RedRising.setDataIndex();
+BewareOfChicken.setDataIndex();
 
 addBookForm.addEventListener('submit', function () {
     NewBook = new Book(this.bookTitle.value, this.bookAuthor.value, this.bookPages.value, this.bookRead.value);
@@ -172,4 +206,8 @@ closeDialogButton.addEventListener('click', () => {
 
 closeEditDialogButton.addEventListener('click', () => {
     editBookModal.close();
+});
+
+closeReviewDialogButton.addEventListener('click', () => {
+    bookReviewModal.close();
 });

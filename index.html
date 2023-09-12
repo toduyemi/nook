@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,10 +9,11 @@
     <link rel="stylesheet" href="./style.css">
     <title>nook</title>
 </head>
+
 <body>
     <header>nook</header>
     <div id="nook">
-        
+
     </div>
     <dialog id="newBookModal">
         <form method="dialog" id="addBookForm">
@@ -46,6 +48,7 @@
                 </div>
             </fieldset>
             <button id="shelveBook" type="submit">shelve</button>
+            <button id="reviewButton" class="form-btn" type="button">review?</button>
         </form>
     </dialog>
 
@@ -70,24 +73,36 @@
                     <label for="bookRead">want to read</label>
                     <input id="wantToRead" type="radio" name="bookRead" value="want to read" required>
                 </div>
-    
+
                 <div>
                     <label for="bookRead">in progress</label>
                     <input id="inProgress" type="radio" name="bookRead" value="in progress" required>
                 </div>
-    
+
                 <div>
                     <label for="bookRead">read</label>
                     <input id="bookRead" type="radio" name="bookRead" value="read" required>
                 </div>
             </fieldset>
-            <button id="shelveBook" type="submit">shelve</button>
+            <button id="shelveBook" class="form-btn" type="submit">shelve</button>
+            <button id="reviewButton" class="form-btn" type="button" disabled>review?</button>
         </form>
     </dialog>
-    
+
+    <dialog id="bookReviewModal">
+        <button id="closeDialog" type="button">x</button>
+        <form method="dialog">
+            <label>thoughts?</label>
+            <input id="reviewInput" type="text-area" name="reviewInput">
+            <button id="logReviewButton" class="form-btn" type="submit">log</button>
+        </form>
+
+    </dialog>
+
     <button id="newBookButton">+</button>
 
 
-    
+
 </body>
+
 </html>
