@@ -3,15 +3,15 @@ const nook = document.querySelector('#nook');
 const newBookButton = document.querySelector(' #newBookButton');
 const newBookModal = document.querySelector('#newBookModal');
 const editBookModal = document.querySelector('#editBookModal');
-const addBookForm = document.querySelector('#addBookForm')
+const newBookForm = document.querySelector('#newBookForm')
 const shelveButton = document.querySelector('#shelveBook');
-const reviewButton = document.querySelector('#editBookModal #reviewButton');
+const newReviewButton = document.querySelector('#newBookModal #reviewButton');
+const editReviewButton = document.querySelector('#editBookModal #reviewButton');
 const bookReviewModal = document.querySelector('#bookReviewModal');
 const closeReviewDialogButton = document.querySelector('#bookReviewModal #closeDialog')
 const closeDialogButton = document.querySelector('#closeDialog');
 const closeEditDialogButton = document.querySelector('#editBookForm #closeDialog');
-let NewBook;
-
+const newBookReadRadios = document.querySelectorAll('#newBookForm [name="bookRead"]');
 
 function Book(title, author, pages, progress) {
     "use strict";
@@ -24,6 +24,7 @@ function Book(title, author, pages, progress) {
     // prevent reprint upon new books
     this.printed = false;
 
+    //html elements declared as concstructor properties to bind
     this.editBookForm = document.querySelector('#editBookForm');
     this.bookReadRadios = document.querySelectorAll('#editBookForm [name="bookRead"]');
     this.deleteButton = document.createElement('button');
@@ -52,22 +53,11 @@ function Book(title, author, pages, progress) {
         this.updateEditBook = this.updateEditBook.bind(this);
         this.editBookForm.addEventListener('submit', this.updateEditBook);
 
-        // for default radio button behaviour
-
+        // greys out review button on edit bookModal
         this.bookReadRadios.forEach(function (radio) {
             radio.addEventListener('change', disableReview);
         });
-
-        reviewButton.addEventListener('click', () => {
-            console.log(this);
-            bookReviewModal.showModal();
-        });
-
-
     });
-
-
-
 
 }
 
@@ -153,15 +143,27 @@ function deleteBookCard(index) {
 }
 
 function disableReview() {
-    // check to see if book has been read
+    // check to see if book has been read; conditions for both modals
+    //have to find a way to clean this up ******
     if (document.querySelector('#editBookForm #bookRead').checked) {
         //show review button
-        reviewButton.disabled = false;
+        editReviewButton.disabled = false;
     }
 
     else {
         //hide review button
-        reviewButton.disabled = true;
+        editReviewButton.disabled = false;
+    }
+
+
+    if (document.querySelector('#newBookForm #bookRead').checked) {
+        //show review button
+        newReviewButton.disabled = false;
+    }
+
+    else {
+        //hide review button
+        newReviewButton.disabled = true;
     }
 }
 
@@ -188,8 +190,8 @@ displayNook();
 RedRising.setDataIndex();
 BewareOfChicken.setDataIndex();
 
-addBookForm.addEventListener('submit', function () {
-    NewBook = new Book(this.bookTitle.value, this.bookAuthor.value, this.bookPages.value, this.bookRead.value);
+newBookForm.addEventListener('submit', function () {
+    let NewBook = new Book(this.bookTitle.value, this.bookAuthor.value, this.bookPages.value, this.bookRead.value);
     // console.log(NewBook);
     addBookToNook(NewBook);
     displayNook();
@@ -210,4 +212,12 @@ closeEditDialogButton.addEventListener('click', () => {
 
 closeReviewDialogButton.addEventListener('click', () => {
     bookReviewModal.close();
+});
+
+newBookReadRadios.forEach(function (radio) {
+    radio.addEventListener('change', disableReview);
+});
+
+reviewButton.addEventListener('click', () => {
+    bookReviewModal.showModal();
 });
