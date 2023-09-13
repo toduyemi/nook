@@ -47,7 +47,9 @@ function Book(title, author, pages, progress) {
         // event Handler tracker prevents an eventhandler 
         // from being added to form every time the edit button is clicked
         editBookModal.showModal();
+
         this.prefillEditBookForm();
+        disableReview();
 
         // submit edit
         this.updateEditBook = this.updateEditBook.bind(this);
@@ -152,7 +154,7 @@ function disableReview() {
 
     else {
         //hide review button
-        editReviewButton.disabled = false;
+        editReviewButton.disabled = true;
     }
 
 
@@ -207,6 +209,7 @@ closeDialogButton.addEventListener('click', () => {
 });
 
 closeEditDialogButton.addEventListener('click', () => {
+    this.editBookForm.removeEventListener('submit', this.updateEditBook);
     editBookModal.close();
 });
 
@@ -218,6 +221,10 @@ newBookReadRadios.forEach(function (radio) {
     radio.addEventListener('change', disableReview);
 });
 
-reviewButton.addEventListener('click', () => {
+newReviewButton.addEventListener('click', () => {
+    bookReviewModal.showModal();
+});
+
+editReviewButton.addEventListener('click', () => {
     bookReviewModal.showModal();
 });

@@ -15,6 +15,7 @@
     <div id="nook">
 
     </div>
+    <button id="newBookButton" type="button">+</button>
     <dialog id="newBookModal">
         <form method="dialog" id="newBookForm">
             <button id="closeDialog" type="button">x</button>
@@ -91,17 +92,12 @@
 
     <dialog id="bookReviewModal">
         <button id="closeDialog" type="button">x</button>
-        <form method="dialog">
-            <label>thoughts?</label>
-            <input id="reviewInput" type="text-area" name="reviewInput">
+        <form method="dialog" id="reviewForm" name="reviewForm">
+            <label for>thoughts?</label>
+            <textarea id="reviewTextArea" rows="15" cols="65" name="reviewForm"></textarea>
             <button id="logReviewButton" class="form-btn" type="submit">log</button>
         </form>
-
     </dialog>
-
-    <button id="newBookButton">+</button>
-
-
 
 </body>
 

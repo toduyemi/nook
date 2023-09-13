@@ -1,2 +1,22 @@
 @import './node_modules/reset-css/';
 
+
+dialog {
+    border-radius: 10px;
+}
+
+label,
+textarea {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+textarea {
+    padding: 10px;
+
+}
+
+#reviewForm label {
+    display: block;
+    margin-bottom: 10px;
+}
