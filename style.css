@@ -1,5 +1,9 @@
-@import './node_modules/reset-css/';
+@import './node_modules/reset-css/reset.css';
 
+body {
+    min-height: 100vh;
+
+}
 
 dialog {
     border-radius: 10px;
@@ -18,5 +22,10 @@ textarea {
 
 #reviewForm label {
     display: block;
+    margin-top: 10px;
     margin-bottom: 10px;
+}
+
+#nook {
+    display: grid;
 }

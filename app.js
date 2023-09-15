@@ -8,10 +8,16 @@ const shelveButton = document.querySelector('#shelveBook');
 const newReviewButton = document.querySelector('#newBookModal #reviewButton');
 const editReviewButton = document.querySelector('#editBookModal #reviewButton');
 const bookReviewModal = document.querySelector('#bookReviewModal');
-const closeReviewDialogButton = document.querySelector('#bookReviewModal #closeDialog')
+const closeReviewDialogButton = document.querySelector('#bookReviewModal #closeDialog');
+const bookReviewForm = document.querySelector('#reviewForm');
+const bookReviewTextArea = document.querySelector('#reviewTextArea');
 const closeDialogButton = document.querySelector('#closeDialog');
 const closeEditDialogButton = document.querySelector('#editBookForm #closeDialog');
 const newBookReadRadios = document.querySelectorAll('#newBookForm [name="bookRead"]');
+const closeFullBookDialogButton = document.querySelector('#fullBookCardModal #closeDialog');
+
+
+let tempBookReview;
 
 function Book(title, author, pages, progress) {
     "use strict";
@@ -20,31 +26,33 @@ function Book(title, author, pages, progress) {
     this.author = author;
     this.pages = pages;
     this.progress = progress;
+    this.review;
 
     // prevent reprint upon new books
     this.printed = false;
 
-    //html elements declared as concstructor properties to bind
+    this.reviewed = false;
+
+    //html elements declared as constructor properties to bind
     this.editBookForm = document.querySelector('#editBookForm');
     this.bookReadRadios = document.querySelectorAll('#editBookForm [name="bookRead"]');
     this.deleteButton = document.createElement('button');
     this.editButton = document.createElement('button');
     this.deleteButton.textContent = 'remove';
     this.editButton.textContent = 'edit';
-
+    this.deleteButton.classList.add('bookCardButton');
+    this.editButton.classList.add('bookCardButton');
 
     //implement delete and edit buttons to be properties of Book constructor
     //this is done to intrinsically bind each element to its parent object
-    this.deleteButton.classList.add('bookCardButton');
+
     this.deleteButton.addEventListener('click', function () {
         let bookIndex = this.getAttribute('data-index');
         deleteBookCard(bookIndex);
     });
 
-    this.editButton.classList.add('bookCardButton');
+
     this.editButton.addEventListener('click', () => {
-        console.log(this);
-        // event Handler tracker prevents an eventhandler 
         // from being added to form every time the edit button is clicked
         editBookModal.showModal();
 
@@ -87,6 +95,10 @@ Book.prototype.createBookCard = function () {
     this.bookCard.appendChild(this.deleteButton);
     this.bookCard.appendChild(this.editButton);
 
+    if (this.reviewed) {
+        this.addUserReviewButtonToCard();
+    }
+
     return this.bookCard;
 }
 
@@ -104,6 +116,12 @@ Book.prototype.setDataIndex = function () {
 }
 
 Book.prototype.updateEditBook = function () {
+    if (tempBookReview) {
+        this.review = tempBookReview;
+        this.reviewed = true;
+        tempBookReview = null;
+    }
+
     this.title = this.editBookForm.bookTitle.value;
     this.author = this.editBookForm.bookAuthor.value;
     this.pages = this.editBookForm.bookPages.value;
@@ -113,6 +131,10 @@ Book.prototype.updateEditBook = function () {
     this.bookAuthor.textContent = `author: ${this.author}`;
     this.bookPages.textContent = `pages: ${this.pages}`;
     this.bookRead.textContent = `status: ${this.progress}`;
+
+    if (this.reviewed) {
+        this.addUserReviewButtonToCard();
+    }
 
     // prevents event listeners from stacking => future calls will change any card already editted
     this.editBookForm.removeEventListener('submit', this.updateEditBook);
@@ -126,6 +148,45 @@ Book.prototype.prefillEditBookForm = function () {
     document.querySelector(`#editBookForm [value="${this.progress}"]`).checked = true;
 }
 
+Book.prototype.addUserReviewButtonToCard = function () {
+    if (!this.fullBookCardButton) {
+        this.fullBookCardButton = document.createElement('button');
+        this.fullBookCardButton.textContent = "...";
+        this.fullBookCardButton.classList.add('bookCardButton');
+        this.fullBookCardButton.setAttribute('id', 'fullBookCardButton');
+        this.bookCard.insertBefore(this.fullBookCardButton, this.deleteButton);
+    }
+
+    this.fullBookCardButton.addEventListener('click', () => {
+        document.querySelectorAll('#fullBookCardModal div').forEach(div => div.remove());
+
+        this.fullBookCardModal = document.querySelector('#fullBookCardModal');
+        this.fullBookCardModal.showModal();
+
+        this.bookTitle = document.createElement('div');
+        this.bookAuthor = document.createElement('div');
+        this.bookPages = document.createElement('div');
+        this.bookRead = document.createElement('div');
+        this.bookReview = document.createElement('div');
+
+        this.bookTitle.textContent = `title: ${this.title}`;
+        this.bookAuthor.textContent = `author: ${this.author}`;
+        this.bookPages.textContent = `pages: ${this.pages}`;
+        this.bookRead.textContent = `status: ${this.progress}`;
+        this.bookReview.textContent = `thoughts: ${this.review}`;
+
+        this.fullBookCardModal.appendChild(this.bookTitle);
+        this.fullBookCardModal.appendChild(this.bookAuthor);
+        this.fullBookCardModal.appendChild(this.bookPages);
+        this.fullBookCardModal.appendChild(this.bookRead);
+        this.fullBookCardModal.appendChild(this.bookReview);
+    });
+}
+
+
+function logReview() {
+    return bookReviewTextArea.value;
+}
 
 function resetAllIds() {
     myNook.forEach(book => book.setDataIndex());
@@ -194,37 +255,44 @@ BewareOfChicken.setDataIndex();
 
 newBookForm.addEventListener('submit', function () {
     let NewBook = new Book(this.bookTitle.value, this.bookAuthor.value, this.bookPages.value, this.bookRead.value);
+
+    //add review to book if there is a review then reset temp book review to prevent memory leak of reviews
+    if (tempBookReview) {
+        NewBook.review = tempBookReview;
+        NewBook.reviewed = true;
+        tempBookReview = null;
+    }
+
     // console.log(NewBook);
     addBookToNook(NewBook);
     displayNook();
     NewBook.setDataIndex();
+    newBookForm.reset();
 });
 
-newBookButton.addEventListener('click', () => {
-    newBookModal.showModal();
-})
+newBookButton.addEventListener('click', () => newBookModal.showModal());
 
-closeDialogButton.addEventListener('click', () => {
-    newBookModal.close();
-});
+closeDialogButton.addEventListener('click', () => newBookModal.close());
 
 closeEditDialogButton.addEventListener('click', () => {
     this.editBookForm.removeEventListener('submit', this.updateEditBook);
     editBookModal.close();
 });
 
-closeReviewDialogButton.addEventListener('click', () => {
-    bookReviewModal.close();
-});
+closeReviewDialogButton.addEventListener('click', () => bookReviewModal.close());
 
-newBookReadRadios.forEach(function (radio) {
-    radio.addEventListener('change', disableReview);
-});
+closeFullBookDialogButton.addEventListener('click', () => fullBookCardModal.close());
 
-newReviewButton.addEventListener('click', () => {
-    bookReviewModal.showModal();
-});
+newBookReadRadios.forEach((radio) => radio.addEventListener('change', disableReview));
+
+newReviewButton.addEventListener('click', () => bookReviewModal.showModal());
 
 editReviewButton.addEventListener('click', () => {
     bookReviewModal.showModal();
 });
+
+bookReviewForm.addEventListener('submit', () => {
+    tempBookReview = logReview();
+    bookReviewForm.reset();
+});
+
