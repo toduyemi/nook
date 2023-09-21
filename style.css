@@ -297,6 +297,9 @@ dialog {
     border-radius: 10px;
     width: 30vw;
     height: 50vh;
+
+    background: linear-gradient(to right, hsl(210, 30%, 20%), hsl(255, 30%, 25%));
+    border: none;
 }
 
 label,
