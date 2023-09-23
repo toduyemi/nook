@@ -24,7 +24,7 @@
                         d="M41.59,22.74l6.33,19.49a1,1,0,0,0,1,.69.87.87,0,0,0,.31-.05,1,1,0,0,0,.64-1.26L43.5,22.12a1,1,0,0,0-1.91.62Z" />
                 </g>
             </svg>
-            nook
+            <h1>nook</h1>
         </div>
         <div class="btn-container">
             <button id="newBookButton" type="button">
@@ -41,84 +41,94 @@
         <div id="nook"></div>
     </div>
     <dialog id="newBookModal" class="modalBookForm">
-        <form method="dialog" id="newBookForm" class="bookForm">
-            <button id="closeDialog" type="button">x</button>
-            <div>
-                <label for="bookTitle">title:</label>
-                <input id="bookTitle" type="text" name="bookTitle" required>
+        <div class="form-container">
+            <div class="row-container">
+                <h2 class="dialogHeader">add new book</h2>
+                <button id="closeDialog" type="button">x</button>
             </div>
-            <div>
-                <label for="bookAuthor">author:</label>
-                <input id="bookAuthor" type="text" name="bookAuthor" required>
-            </div>
-            <div>
-                <label for="bookPages">pages:</label>
-                <input id="bookPages" type="number" name="bookPages">
-            </div>
-            <fieldset>
-                <legend>book status:</legend>
+            <form method="dialog" id="newBookForm" class="bookForm">
                 <div>
-                    <label for="bookRead">want to read</label>
-                    <input id="wantToRead" type="radio" name="bookRead" value="want to read" required>
+                    <label for="bookTitle"></label>
+                    <input id="bookTitle" type="text" name="bookTitle" placeholder="title" required autofocus>
                 </div>
+                <div>
+                    <label for="bookAuthor"></label>
+                    <input id="bookAuthor" type="text" name="bookAuthor" placeholder="author" required>
+                </div>
+                <div>
+                    <label for="bookPages"></label>
+                    <input id="bookPages" type="number" name="bookPages" placeholder="###">
+                </div>
+                <fieldset>
+                    <legend>book status:</legend>
+                    <label for="bookRead" class="radioControl">
+                        <input id="wantToRead" type="radio" name="bookRead" value="want to read" required>
+                        want to read
+                    </label>
 
-                <div>
-                    <label for="bookRead">in progress</label>
-                    <input id="inProgress" type="radio" name="bookRead" value="in progress" required>
-                </div>
+                    <label for="bookRead" class="radioControl">
+                        <input id="inProgress" type="radio" name="bookRead" value="in progress" required>
+                        in progress
+                    </label>
 
-                <div>
-                    <label for="bookRead">read</label>
-                    <input id="bookRead" type="radio" name="bookRead" value="read" required>
-                </div>
-            </fieldset>
-            <button id="shelveBook" type="submit">shelve</button>
-            <button id="reviewButton" class="form-btn" type="button" disabled>review?</button>
-        </form>
+                    <label for="bookRead" class="radioControl">
+                        <input id="bookRead" type="radio" name="bookRead" value="read" required>
+                        read
+                    </label>
+                </fieldset>
+                <button id="shelveBook" class="form-btn" type="submit">shelve</button>
+                <button id="reviewButton" class="form-btn" type="button" disabled>review?</button>
+            </form>
+        </div>
     </dialog>
 
-    <dialog id="editBookModal" class="modaBookForm">
-        <form method="dialog" id="editBookForm" class="bookForm">
-            <button id="closeDialog" type="button">x</button>
-            <div>
-                <label for="bookTitle">title:</label>
-                <input id="bookTitle" type="text" name="bookTitle" required>
+    <dialog id="editBookModal" class="modalBookForm">
+        <div class="form-container">
+            <div class="row-container">
+                <h2 class="dialogHeader">edit book</h2>
+                <button id="closeDialog" type="button">x</button>
             </div>
-            <div>
-                <label for="bookAuthor">author:</label>
-                <input id="bookAuthor" type="text" name="bookAuthor" required>
-            </div>
-            <div>
-                <label for="bookPages">pages:</label>
-                <input id="bookPages" type="number" name="bookPages">
-            </div>
-            <fieldset>
-                <legend>book status:</legend>
+            <form method="dialog" id="editBookForm" class="bookForm">
                 <div>
-                    <label for="bookRead">want to read</label>
-                    <input id="wantToRead" type="radio" name="bookRead" value="want to read" required>
+                    <label for="bookTitle"></label>
+                    <input id="bookTitle" type="text" name="bookTitle" placeholder="title" required autofocus>
                 </div>
+                <div>
+                    <label for="bookAuthor"></label>
+                    <input id="bookAuthor" type="text" name="bookAuthor" placeholder="author" required>
+                </div>
+                <div>
+                    <label for="bookPages"></label>
+                    <input id="bookPages" type="number" name="bookPages" placeholder="###">
+                </div>
+                <fieldset>
+                    <legend>book status:</legend>
+                    <label for="bookRead" class="radioControl">
+                        <input id="wantToRead" type="radio" name="bookRead" value="want to read" required>
+                        want to read
+                    </label>
 
-                <div>
-                    <label for="bookRead">in progress</label>
-                    <input id="inProgress" type="radio" name="bookRead" value="in progress" required>
-                </div>
+                    <label for="bookRead" class="radioControl">
+                        <input id="inProgress" type="radio" name="bookRead" value="in progress" required>
+                        in progress
+                    </label>
 
-                <div>
-                    <label for="bookRead">read</label>
-                    <input id="bookRead" type="radio" name="bookRead" value="read" required>
-                </div>
-            </fieldset>
-            <button id="shelveBook" class="form-btn" type="submit">shelve</button>
-            <button id="reviewButton" class="form-btn" type="button" disabled>review?</button>
-        </form>
+                    <label for="bookRead" class="radioControl">
+                        <input id="bookRead" type="radio" name="bookRead" value="read" required>
+                        read
+                    </label>
+                </fieldset>
+                <button id="shelveBook" class="form-btn" type="submit">shelve</button>
+                <button id="reviewButton" class="form-btn" type="button" disabled>review?</button>
+            </form>
+        </div>
     </dialog>
 
     <dialog id="bookReviewModal">
         <button id="closeDialog" type="button">x</button>
         <form method="dialog" id="reviewForm" name="reviewForm">
             <label for>thoughts?</label>
-            <textarea id="reviewTextArea" rows="30vh" cols="100vw" name="reviewForm"></textarea>
+            <textarea id="reviewTextArea" rows="30vh" cols="50vw" name="reviewForm"></textarea>
             <button id="logReviewButton" class="form-btn" type="submit">log</button>
         </form>
     </dialog>

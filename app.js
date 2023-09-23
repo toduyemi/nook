@@ -12,7 +12,7 @@ const closeReviewDialogButton = document.querySelector('#bookReviewModal #closeD
 const bookReviewForm = document.querySelector('#reviewForm');
 const bookReviewTextArea = document.querySelector('#reviewTextArea');
 const closeDialogButton = document.querySelector('#closeDialog');
-const closeEditDialogButton = document.querySelector('#editBookForm #closeDialog');
+const closeEditDialogButton = document.querySelector('#editBookModal #closeDialog');
 const newBookReadRadios = document.querySelectorAll('#newBookForm [name="bookRead"]');
 const closeFullBookDialogButton = document.querySelector('#fullBookCardModal #closeDialog');
 
