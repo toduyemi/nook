@@ -61,12 +61,12 @@
                 </div>
                 <fieldset>
                     <legend>book status:</legend>
-                    <label for="bookRead" class="radioControl">
+                    <label for="wantToRead" class="radioControl">
                         <input id="wantToRead" type="radio" name="bookRead" value="want to read" required>
                         want to read
                     </label>
 
-                    <label for="bookRead" class="radioControl">
+                    <label for="inProgress" class="radioControl">
                         <input id="inProgress" type="radio" name="bookRead" value="in progress" required>
                         in progress
                     </label>
@@ -91,7 +91,7 @@
             <form method="dialog" id="editBookForm" class="bookForm">
                 <div>
                     <label for="bookTitle"></label>
-                    <input id="bookTitle" type="text" name="bookTitle" placeholder="title" required autofocus>
+                    <input id="bookTitle" type="text" name="bookTitle" placeholder="title" required>
                 </div>
                 <div>
                     <label for="bookAuthor"></label>
@@ -103,12 +103,12 @@
                 </div>
                 <fieldset>
                     <legend>book status:</legend>
-                    <label for="bookRead" class="radioControl">
+                    <label for="wantToRead" class="radioControl">
                         <input id="wantToRead" type="radio" name="bookRead" value="want to read" required>
                         want to read
                     </label>
 
-                    <label for="bookRead" class="radioControl">
+                    <label for="inProgress" class="radioControl">
                         <input id="inProgress" type="radio" name="bookRead" value="in progress" required>
                         in progress
                     </label>
@@ -118,7 +118,7 @@
                         read
                     </label>
                 </fieldset>
-                <button id="shelveBook" class="form-btn" type="submit">shelve</button>
+                <button id="shelveBook" class="form-btn" type="submit" autofocus>shelve</button>
                 <button id="reviewButton" class="form-btn" type="button" disabled>review?</button>
             </form>
         </div>
@@ -127,8 +127,9 @@
     <dialog id="bookReviewModal">
         <button id="closeDialog" type="button">x</button>
         <form method="dialog" id="reviewForm" name="reviewForm">
-            <label for>thoughts?</label>
-            <textarea id="reviewTextArea" rows="30vh" cols="50vw" name="reviewForm"></textarea>
+            <label for="reviewTextAre"></label>
+            <textarea id="reviewTextArea" rows="28vh" cols="50vw" name="reviewForm" placeholder="share your thoughts..."
+                autofocus></textarea>
             <button id="logReviewButton" class="form-btn" type="submit">log</button>
         </form>
     </dialog>
