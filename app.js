@@ -26,7 +26,8 @@ function Book(title, author, pages, progress) {
     this.author = author;
     this.pages = pages;
     this.progress = progress;
-    this.review;
+    this.review = null;
+    this.id = null;
 
     // prevent reprint upon new books
     this.printed = false;
@@ -179,7 +180,8 @@ Book.prototype.addUserReviewButtonToCard = function () {
         this.fullBookCardButton.textContent = "...";
         this.fullBookCardButton.classList.add('bookCardButton');
         this.fullBookCardButton.setAttribute('id', 'fullBookCardButton');
-        this.bookCard.insertBefore(this.fullBookCardButton, this.deleteButton);
+        this.bookCardButtonContainer.insertBefore(this.fullBookCardButton, this.deleteButton);
+        this
     }
 
     this.fullBookCardButton.addEventListener('click', () => {
