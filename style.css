@@ -665,3 +665,19 @@ textarea::placeholder {
         sans-serif;
     font-size: 1.5rem;
 }
+
+footer {
+    min-height: 10vh;
+    background: black;
+    font-weight: 900;
+    font-size: 30px;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+img {
+    height: 4.5rem;
+}
