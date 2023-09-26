@@ -35,23 +35,13 @@ function Book(title, author, pages, progress) {
     // checks to see if instance has a review for it
     this.reviewed = false;
 
-    //html elements declared as constructor properties to bind
-    this.editBookForm = document.querySelector('#editBookForm');
-    this.bookReadRadios = document.querySelectorAll('#editBookForm [name="bookRead"]');
 
-    this.bookCardButtonContainer = document.createElement('div');
-    this.deleteButton = document.createElement('button');
-    this.editButton = document.createElement('button');
 
-    this.bookCardButtonContainer.appendChild(this.deleteButton);
-    this.bookCardButtonContainer.appendChild(this.editButton);
 
     this.deleteButton.textContent = 'remove';
     this.editButton.textContent = 'edit';
 
-    this.deleteButton.classList.add('bookCardButton');
-    this.editButton.classList.add('bookCardButton');
-    this.bookCardButtonContainer.classList.add('bookCardButtonContainer');
+
     //implement delete and edit buttons to be properties of Book constructor
     //this is done to intrinsically bind each element to its parent object
 
@@ -68,48 +58,66 @@ function Book(title, author, pages, progress) {
         this.prefillEditBookForm();
         disableReview();
 
-        // submit edit
-        this.updateEditBook = this.updateEditBook.bind(this);
-        this.editBookForm.addEventListener('submit', this.updateEditBook);
+        this.editBookForm.addEventListener('submit', this.updateEditBook.bind(this));
 
         // greys out review button on edit bookModal
         this.bookReadRadios.forEach(function (radio) {
             radio.addEventListener('change', disableReview);
         });
     });
-
+    this.init();
 }
 
-//method to create bookCard html element
-Book.prototype.createBookCard = function () {
-    //create bookcard div as a property of Book constructor
+Book.prototype.init = function () {
+    this.cacheDOM();
+    this.createHTML();
+    this.createDOM();
+}
+
+Book.prototype.cacheDOM = function () {
+    //html elements declared as constructor properties to bind
+    this.editBookForm = document.querySelector('#editBookForm');
+    this.bookReadRadios = document.querySelectorAll('#editBookForm [name="bookRead"]');
+}
+
+Book.prototype.createHTML = function () {
     this.bookCardWrapper = document.createElement('div');
     this.bookCard = document.createElement('div');
-    this.bookCard.classList.add('bookCard');
-    this.bookCardWrapper.classList.add('bookCardWrapper');
 
-    //these properties represent html elements bound to each book object constructed
     this.bookTitle = document.createElement('div');
     this.bookAuthor = document.createElement('div');
     this.bookPages = document.createElement('div');
     this.bookRead = document.createElement('div');
+
     this.cardHeaderContainer = document.createElement('div');
     this.cardDetailsContainer = document.createElement('div');
+    this.bookCardButtonContainer = document.createElement('div');
 
+    this.deleteButton = document.createElement('button');
+    this.editButton = document.createElement('button');
+
+    this.bookCard.classList.add('bookCard');
+    this.bookCardWrapper.classList.add('bookCardWrapper');
     this.cardHeaderContainer.classList.add('cardHeaderContainer');
     this.cardDetailsContainer.classList.add('cardDetailsContainer');
     this.bookTitle.classList.add('bookCardTitle');
     this.bookAuthor.classList.add('bookCardAuthor');
     this.bookPages.classList.add('bookCardPages');
     this.bookRead.classList.add('bookCardRead');
+    this.deleteButton.classList.add('bookCardButton');
+    this.editButton.classList.add('bookCardButton');
+    this.bookCardButtonContainer.classList.add('bookCardButtonContainer');
 
-    this.bookTitle.textContent = `${this.title}`;
-    this.bookAuthor.textContent = `by ${this.author}`;
-    this.bookPages.textContent = `${this.pages} pgs`;
-    this.bookRead.textContent = `status: ${this.progress}`;
+}
+
+Book.prototype.createDOM = function () {
+
+    this.bookCardButtonContainer.appendChild(this.deleteButton);
+    this.bookCardButtonContainer.appendChild(this.editButton);
 
     this.cardHeaderContainer.appendChild(this.bookTitle);
     this.cardHeaderContainer.appendChild(this.bookAuthor);
+
     this.cardDetailsContainer.appendChild(this.bookRead);
     this.cardDetailsContainer.appendChild(this.bookPages);
 
@@ -119,6 +127,15 @@ Book.prototype.createBookCard = function () {
 
 
     this.bookCardWrapper.appendChild(this.bookCard);
+}
+
+//method to create bookCard html element
+Book.prototype.createBookCard = function () {
+
+    this.bookTitle.textContent = `${this.title}`;
+    this.bookAuthor.textContent = `by ${this.author}`;
+    this.bookPages.textContent = `${this.pages} pgs`;
+    this.bookRead.textContent = `status: ${this.progress}`;
 
     if (this.reviewed) {
         this.addUserReviewButtonToCard();
@@ -153,10 +170,7 @@ Book.prototype.updateEditBook = function () {
     this.pages = this.editBookForm.bookPages.value;
     this.progress = this.editBookForm.bookRead.value;
 
-    this.bookTitle.textContent = `${this.title}`;
-    this.bookAuthor.textContent = `by ${this.author}`;
-    this.bookPages.textContent = `${this.pages} pgs`;
-    this.bookRead.textContent = `status: ${this.progress}`;
+    this.createBookCard();
 
     if (this.reviewed) {
         this.addUserReviewButtonToCard();
@@ -181,7 +195,7 @@ Book.prototype.addUserReviewButtonToCard = function () {
         this.fullBookCardButton.classList.add('bookCardButton');
         this.fullBookCardButton.setAttribute('id', 'fullBookCardButton');
         this.bookCardButtonContainer.insertBefore(this.fullBookCardButton, this.deleteButton);
-        this
+
     }
 
     this.fullBookCardButton.addEventListener('click', () => {
@@ -235,15 +249,18 @@ function deleteBookCard(index) {
 function disableReview() {
     // check to see if book has been read; conditions for both modals
     //have to find a way to clean this up ******
-    if (document.querySelector('#editBookForm #bookRead').checked) {
-        //show review button
-        editReviewButton.disabled = false;
-    }
 
-    else {
-        //hide review button
-        editReviewButton.disabled = true;
-    }
+
+    if ()
+        if (document.querySelector('#editBookForm #bookRead').checked) {
+            //show review button
+            editReviewButton.disabled = false;
+        }
+
+        else {
+            //hide review button
+            editReviewButton.disabled = true;
+        }
 
 
     if (document.querySelector('#newBookForm #bookRead').checked) {
