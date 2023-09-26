@@ -35,36 +35,6 @@ function Book(title, author, pages, progress) {
     // checks to see if instance has a review for it
     this.reviewed = false;
 
-
-
-
-    this.deleteButton.textContent = 'remove';
-    this.editButton.textContent = 'edit';
-
-
-    //implement delete and edit buttons to be properties of Book constructor
-    //this is done to intrinsically bind each element to its parent object
-
-    this.deleteButton.addEventListener('click', function () {
-        let bookIndex = this.getAttribute('data-index');
-        deleteBookCard(bookIndex);
-    });
-
-
-    this.editButton.addEventListener('click', () => {
-        // from being added to form every time the edit button is clicked
-        editBookModal.showModal();
-
-        this.prefillEditBookForm();
-        disableReview();
-
-        this.editBookForm.addEventListener('submit', this.updateEditBook.bind(this));
-
-        // greys out review button on edit bookModal
-        this.bookReadRadios.forEach(function (radio) {
-            radio.addEventListener('change', disableReview);
-        });
-    });
     this.init();
 }
 
@@ -72,6 +42,7 @@ Book.prototype.init = function () {
     this.cacheDOM();
     this.createHTML();
     this.createDOM();
+    this.bindHTML();
 }
 
 Book.prototype.cacheDOM = function () {
@@ -108,6 +79,8 @@ Book.prototype.createHTML = function () {
     this.editButton.classList.add('bookCardButton');
     this.bookCardButtonContainer.classList.add('bookCardButtonContainer');
 
+    this.bookReview = document.createElement('div');
+
 }
 
 Book.prototype.createDOM = function () {
@@ -129,6 +102,30 @@ Book.prototype.createDOM = function () {
     this.bookCardWrapper.appendChild(this.bookCard);
 }
 
+Book.prototype.bindHTML = function () {
+    //implement delete and edit buttons to be properties of Book constructor
+    //this is done to intrinsically bind each element to its parent object
+
+    this.deleteButton.addEventListener('click', () => deleteBookCard(this.id).bind(this));
+
+
+    this.editButton.addEventListener('click', () => {
+        // from being added to form every time the edit button is clicked
+        editBookModal.showModal();
+
+        this.prefillEditBookForm();
+        disableReview();
+
+        this.editBookForm.addEventListener('submit', this.updateEditBook.bind(this));
+
+        // greys out review button on edit bookModal
+        this.bookReadRadios.forEach(function (radio) {
+            radio.addEventListener('change', disableReview);
+        });
+    });
+
+}
+
 //method to create bookCard html element
 Book.prototype.createBookCard = function () {
 
@@ -136,6 +133,9 @@ Book.prototype.createBookCard = function () {
     this.bookAuthor.textContent = `by ${this.author}`;
     this.bookPages.textContent = `${this.pages} pgs`;
     this.bookRead.textContent = `status: ${this.progress}`;
+
+    this.deleteButton.textContent = 'remove';
+    this.editButton.textContent = 'edit';
 
     if (this.reviewed) {
         this.addUserReviewButtonToCard();
@@ -207,8 +207,7 @@ Book.prototype.addUserReviewButtonToCard = function () {
         this.bookTitle = document.createElement('div');
         this.bookAuthor = document.createElement('div');
         this.bookPages = document.createElement('div');
-        this.bookRead = document.createElement('div');
-        this.bookReview = document.createElement('div');
+        txhis.bookRead = document.createElement('div');
 
         this.bookTitle.textContent = `title: ${this.title}`;
         this.bookAuthor.textContent = `author: ${this.author}`;
@@ -251,16 +250,15 @@ function disableReview() {
     //have to find a way to clean this up ******
 
 
-    if ()
-        if (document.querySelector('#editBookForm #bookRead').checked) {
-            //show review button
-            editReviewButton.disabled = false;
-        }
+    if (document.querySelector('#editBookForm #bookRead').checked) {
+        //show review button
+        editReviewButton.disabled = false;
+    }
 
-        else {
-            //hide review button
-            editReviewButton.disabled = true;
-        }
+    else {
+        //hide review button
+        editReviewButton.disabled = true;
+    }
 
 
     if (document.querySelector('#newBookForm #bookRead').checked) {
