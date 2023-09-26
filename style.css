@@ -304,7 +304,9 @@ button {
 #nook {
     display: grid;
     width: 100%;
-    grid-template: repeat(5, minmax(300px, 600px)) / repeat(auto-fill, minmax(600px, 1fr));
+    height: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    grid-auto-rows: minmax(300px, 600px);
     gap: 50px;
 
 
@@ -617,6 +619,7 @@ dialog button:focus {
     box-shadow: 0 0 4.4rem .2rem var(--shadow-2);
 }
 
+/* book review form modal styling*/
 #bookReviewModal {
     display: flex;
     flex-direction: column;
