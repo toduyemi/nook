@@ -138,7 +138,7 @@ Book.prototype.createBookCard = function () {
     this.editButton.textContent = 'edit';
 
     if (this.reviewed) {
-        this.addUserReviewButtonToCard();
+        this.addFullBookCardButtonToCard();
     }
 
     return this.bookCardWrapper;
@@ -173,7 +173,7 @@ Book.prototype.updateEditBook = function () {
     this.createBookCard();
 
     if (this.reviewed) {
-        this.addUserReviewButtonToCard();
+        this.addFullBookCardButtonToCard();
     }
 
     // prevents event listeners from stacking => future calls will change any card already editted
@@ -188,7 +188,7 @@ Book.prototype.prefillEditBookForm = function () {
     document.querySelector(`#editBookForm [value="${this.progress}"]`).checked = true;
 }
 
-Book.prototype.addUserReviewButtonToCard = function () {
+Book.prototype.addFullBookCardButtonToCard = function () {
     if (!this.fullBookCardButton) {
         this.fullBookCardButton = document.createElement('button');
         this.fullBookCardButton.textContent = "...";
