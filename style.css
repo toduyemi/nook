@@ -168,7 +168,7 @@ body {
 header {
     background-color: black;
     min-height: 150px;
-    height: 15vh;
+    height: 12vh;
     width: 100%;
     padding: 20px;
     padding-right: 50px;
@@ -668,7 +668,7 @@ textarea::placeholder {
 }
 
 footer {
-    min-height: 10vh;
+    min-height: 7vh;
     background: black;
     font-weight: 900;
     font-size: 30px;
